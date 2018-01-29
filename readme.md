@@ -1,2 +1,2 @@
-Stejara Iulia Dinulescu
-Repository for Nand to Tetris, CRCP 2330
+# crcp2330
+Nand to Tetris
