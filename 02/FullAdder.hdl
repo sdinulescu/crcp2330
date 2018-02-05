@@ -12,8 +12,11 @@ CHIP FullAdder {
     OUT sum,     // Right bit of a + b + c
         carry;   // Left bit of a + b + c
 
+
     PARTS:
     // Put you code here:
+
+    /*
 	Not(in = a, out = notA);
     Not(in = b, out = notB);
     Not(in = c, out = notC);
@@ -45,10 +48,10 @@ CHIP FullAdder {
     Or(a = P7, b = P8, out = orOut4);
     Or(a = orOut3, b = orOut4, out = carry);
 
-
+    */
 
     //Trying to make with 2 half-adders, DOESN'T WORK
-    //HalfAdder(a = a, b = b, sum = sum1, carry = carry1);
-    //Or(a = a, b = b, out = orOut);
-    //HalfAdder(a = c, b = orOut, sum = sum2, carry = carry2);
+    HalfAdder(a = a, b = b, sum = sum1, carry = carry1);
+    HalfAdder(a = c, b = sum1, sum = sum, carry = carry2);
+    Or(a = carry1, b = carry2, out = carry);
 }
