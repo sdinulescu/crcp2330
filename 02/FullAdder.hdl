@@ -14,4 +14,41 @@ CHIP FullAdder {
 
     PARTS:
     // Put you code here:
+	Not(in = a, out = notA);
+    Not(in = b, out = notB);
+    Not(in = c, out = notC);
+    
+
+    //sum
+    And(a = notA, b = notB, out = L1);
+    And(a = L1, b = c, out = P1);
+    And(a = notA, b = b, out = L2);
+    And(a = L2, b = notC, out = P2);
+    And(a = a, b = notB, out = L3);
+    And(a = L3, b = notC, out = P3);
+    And(a = a, b = b, out = L4);
+    And(a = L4, b = c, out = P4);
+    Or(a = P1, b = P2, out = orOut1);
+    Or(a = P3, b = P4, out = orOut2);
+    Or(a = orOut1, b = orOut2, out = sum);
+
+    //carry
+    And(a = notA, b = b, out = L5);
+    And(a = L5, b = c, out = P5);
+    And(a = a, b = notB, out = L6);
+    And(a = L6, b = c, out = P6);
+    And(a = a, b = b, out = L7);
+    And(a = L7, b = notC, out = P7);
+    And(a = a, b = b, out = L8);
+    And(a = L8, b = c, out = P8);
+    Or(a = P5, b = P6, out = orOut3);
+    Or(a = P7, b = P8, out = orOut4);
+    Or(a = orOut3, b = orOut4, out = carry);
+
+
+
+    //Trying to make with 2 half-adders, DOESN'T WORK
+    //HalfAdder(a = a, b = b, sum = sum1, carry = carry1);
+    //Or(a = a, b = b, out = orOut);
+    //HalfAdder(a = c, b = orOut, sum = sum2, carry = carry2);
 }
