@@ -65,7 +65,7 @@ CHIP ALU {
    Or8Way(in = out15, out = or15);
    Or(a = or7, b = or15, out = orOut);
    Xor(a = orOut, b = true, out = zr); //handle positive and negative values (zr)
-   
+
    And(a = lastOut, b = true, out = ng); //handle less than (ng)
 
 }
