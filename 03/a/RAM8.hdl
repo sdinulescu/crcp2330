@@ -16,4 +16,25 @@ CHIP RAM8 {
 
     PARTS:
     // Put your code here:
+
+    //Use dmux to select which register. DMux8Way because you have 8 registers?
+    DMux8Way(in = load, sel = address, a = l1, b = l2, c = l3, d = l4, e = l5, f = l6, g = l7, h = l8);
+
+    //how would you use 3 demuxes only? Wouldn't that give only 6 outputs?
+    //DMux(in = load, sel = address[0], a = , b = );
+    //DMux(in = load, sel = address[1], a = , b = );
+    //DMux(in = load, sel = address[2], a = , b = );
+
+    //we need 8 16-bit registers that we have to pick from
+    Register(in = in, load = l1, out = out1);
+    Register(in = in, load = l2, out = out2);
+    Register(in = in, load = l3, out = out3);
+    Register(in = in, load = l4, out = out4);
+    Register(in = in, load = l5, out = out5);
+    Register(in = in, load = l6, out = out6);
+    Register(in = in, load = l7, out = out7);
+    Register(in = in, load = l8, out = out8);
+
+    Mux8Way16(a = out1, b = out2, c = out3, d = out4, e = out5, f = out6, g = out7, h = out8, sel = address, out = out); //pick final output
+
 }
