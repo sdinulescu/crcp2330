@@ -17,4 +17,11 @@ CHIP PC {
 
     PARTS:
     // Put your code here:
+
+	Inc16(in = outReg, out = incOut); //deals with incrementer
+	Mux16(a = outReg, b = incOut, sel = inc, out = muxOut); //output of chip together with incrementer output (sel being inc)
+	Mux16(a = muxOut, b = in, sel = load, out = mux2Out); //sel = load, mux between input and previous mux output
+	Mux16(a = mux2Out, b = false, sel = reset, out = finalOut); //deals with reset
+    Register(in = finalOut, load = true, out = out, out = outReg); //loops -> output goes into Inc chip
+    
 }
