@@ -16,27 +16,55 @@
 
 // Put your code here.
 
+//figure out how to multiply for the whole screen -> total is 8192 16-bit registers
 
+@8192
+D=A 				//set D register to 8192
 
+@var 				//var is a counter variable
+M=D 				//var = 8192
 
 (LOOP)
+	@pos 			//variable for position on the screen
+	M=0 			//starts at 0, will increment to get all pixels on screen
+
+(KEY)
 	@KBD
 	D=M 			//grabs whether or not a key is pressed
-	@BLACK
-	D;JNE 			//go to black if out doesn't equal 0 (if key is pressed)
+	@WHITE
+	D;JEQ 			//go to white if out equals 0 (key not pressed)
 
-(WHITE)
-	@SCREEN
+(BLACK)				//fill with black
+	@pos 			//find position we are in
+	D=M 			//load it into the D register
+
+	@SCREEN  		
+	A=A+D 			//set screen to whatever register position
+	M=-1 	 		//set it to black
+	
+	@END 			//go to end in order to increment position and decrease var
+	0;JMP	
+
+//white is initial state
+(WHITE) 			//fill with white
+	@pos			//find the pos
+	D=M
+
+	@SCREEN 
+	A=A+D 			//calculate the position
 	M=0 			//fill with white
-
-
-(BLACK)
-	@SCREEN
-	M=-1 			//fill with black
-	@END
-	0;JMP
-
-
+	
 (END)
+	@pos 			//increment position (to change the whole screen)
+	D=M
+	D=D+1
+	M=D
+
+	@var 			//decrease var ("counter")
+	D=D-M
+
 	@LOOP
+	D;JEQ 			//if var-pos == 0, go to loop (if whole screen is filled)
+
+	@KEY
 	0;JMP 			//infinite loop
