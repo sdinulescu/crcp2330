@@ -28,4 +28,13 @@ CHIP Memory {
 
     PARTS:
     // Put your code here:
+
+    DMux4Way(in = load, sel[0] = address[13], sel[1] = address[14], a = lRam1, b = lRam2, c = loadScr, d = loadKey); 
+    	//Dmux to output options to choose btw. RAM, Screen, and Keyboard
+    Or(a = lRam1, b = lRam2, out = loadRam); //final Ram choice
+    RAM16K(in = in, load = loadRam, address = address[0..13], out = outRam);
+    Screen(in = in, load = loadScr, address = address[0..12], out = outScreen);
+    Keyboard(out = outKey);
+    Mux4Way16(a = outRam, b = outRam, c = outScreen, d= outKey, sel[0] = address[13], sel[1] = address[14], out = out);
+
 }
