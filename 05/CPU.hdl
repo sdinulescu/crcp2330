@@ -40,4 +40,65 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
+
+    //c-instruction: ixxaccccccdddjjj
+    //if instruction[1] = 1 -> c instruction
+    //if instruction[0] = 0 -> a instruction
+    And(a = instruction[15], b = true, out = cInst);
+    Not(in = cInst, out = aInst);
+
+    //d bits:
+    Or(a = aInst, b = instruction[5], out = AReg);
+    And(a = cInst, b = instruction[4], out = DReg);
+    And(a = cInst, b = instruction[3], out = writeM); //final writeM
+
+    Mux16(a = aluOut, b = instruction, sel = aInst, out = outM1);
+    
+    //And(a = instruction[12], b = true, out = out12true);
+    //And(a = instruction[12], b = false, out = out12false);
+
+    ARegister(in = outM1, load = AReg, out = outA);
+    DRegister(in = aluOut, load = DReg, out = outD);
+    And16(a = true, b = aluOut, out = outM); //final outM
+
+    Mux16(a = outA, b = inM, sel = instruction[12], out = outM2);
+    
+    ALU(
+        x = outD, y = outM2, 
+        zx = instruction[11], nx = instruction[10], 
+        zy = instruction[9], ny = instruction[8], 
+        f = instruction[7], no = instruction[6], 
+        out = aluOut, zr = zero, ng = negative
+    );
+
+    Or16(a = false, b = outA, out[0..14] = addressM);
+
+
+
+    //instruction fetching
+    //if jump then PC = A
+    //else PC++
+    //need to use 3 j bits (instruction[5..3])
+    And(a = instruction[2], b = true, out = j1);
+    And(a = instruction[1], b = true, out = j2);
+    And(a = instruction[0], b = true, out = j3);
+
+    Or(a = zero, b = negative, out = orOut);
+    Not(in = orOut, out = positive);
+
+    //Not(in = negative, out = notNegative);
+    //Or(a = notNegative, b = zero, out = positive);
+    
+    And(a = negative, b = j1, out = jlt); //out < 0
+    And(a = zero, b = j2, out = jeq); //out = 0
+    And(a = positive, b = j3, out = jgt); //out > 0
+
+    Or(a = jlt, b = jeq, out = jle);
+    Or(a = jle, b = jgt, out = jump);
+
+    And(a = cInst, b = jump, out = l);
+    Not(in = l, out = increment);
+
+    PC(in = outA, load = l, inc = increment, reset = reset, out[0..14] = pc);
+
 }
