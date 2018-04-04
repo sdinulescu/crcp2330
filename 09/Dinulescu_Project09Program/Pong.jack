@@ -1,0 +1,17 @@
+/** 
+** Pong Game
+** Pong game generator class
+** Created by Stejara Dinulescu
+**/
+
+class Pong {
+	field Ball ball;
+	field Paddle paddle1;
+	field Paddle paddle2;
+
+	constructor Pong new {
+		let ball = Ball.new(128, 256, 5);
+		let paddle1 = Paddle.new(0, 251);
+		let paddle2 = Paddle.new(251, 251);
+	}
+}
