@@ -9,9 +9,39 @@ class Pong {
 	field Paddle paddle1;
 	field Paddle paddle2;
 
+	/** creates pong game */
 	constructor Pong new {
 		let ball = Ball.new(128, 256, 5);
 		let paddle1 = Paddle.new(0, 251);
 		let paddle2 = Paddle.new(251, 251);
 	}
+
+    /** disposes the game */
+    method void dispose() {
+        do ball.dispose();
+        do paddle1.dispose();
+        do paddle2.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** runs the game */
+    method void run() {
+    	var char key;  // the key currently pressed by the user
+      	var boolean exit;
+      	let exit = false;
+      
+      	while (~exit) {
+      		if ( key = 113) { let exit = true; } 
+      		else {
+	    		do ball.draw();
+	    		do paddle1.draw();
+	    		do paddle2.draw();
+
+	    		do ball.move();
+	    		do paddle1.move();
+	    		do paddle2.move();
+	    	}
+	    }
+    }
 }

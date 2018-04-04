@@ -94,13 +94,13 @@ class Paddle {
    /* describes movement of paddle with keypress */
    method void move() {
    	  if ( keyPressed() != 0) {
-   	  	if ( keyPressed() == 'a' ){
+   	  	if ( keyPressed() == 97 ){
    	  		moveLeft();
-   	  	} else if ( keyPressed() == 'd' ) {
+   	  	} else if ( keyPressed() == 100 ) {
    	  		moveRight();
-   	  	} else if ( keyPressed() == 'w' ) {
+   	  	} else if ( keyPressed() == 119 ) {
    	  		moveUp();
-   	  	} else if ( keyPressed() == 's' ) {
+   	  	} else if ( keyPressed() == 115 ) {
    	  		moveDown();
    	  	}
    	  }
