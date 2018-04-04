@@ -3,3 +3,58 @@
 ** Ball class
 ** Created by Stejara Dinulescu
 **/
+
+
+class Ball {
+	
+	field int x, y; //x and y coordinates of ball
+	field int radius; //radius of ball
+	field int xSpeed; //x speed of ball
+	field int ySpeed;
+
+	/* creates Ball object */
+	constructor Ball new (int _x, int _y, int _rad) {
+		//sets attributes
+		let x = _x; 
+		let y = _y;
+		let radius = _rad;
+		let xSpeed = 5;
+		let ySpeed = 5;
+		//draws shape
+		do draw();
+		return this;
+	}
+
+	/* destroys allocated memory */
+	method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /* draws ball on screen */
+   method void draw() {
+   	  do Screen.setColor(true); //displays shape
+   	  do Screen.drawCircle(x, y, radius);
+   	  return;
+   }
+
+   /* erases ball from scren */ 
+   method void erase() {
+   	  do Screen.setColor(false);
+   	  do Screen.drawCircle(x, y, radius);
+   	  return;
+   }
+
+   /* moves ball */
+   method void move() {
+   	  let x = x + xSpeed;
+   	  let y = y + ySpeed;
+   	  if (x >= 256 || x <= 0) {
+   	  	let xSpeed = -xSpeed;
+   	  } 
+   	  if (y >= 512 || y <= 0) {
+   	  	let ySpeed = -ySpeed;
+   	  }
+   }
+
+}
