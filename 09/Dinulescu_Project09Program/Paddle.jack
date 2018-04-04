@@ -1,0 +1,107 @@
+/** 
+** Pong Game
+** Paddle class
+** Created by Stejara Dinulescu
+**/
+
+
+class Paddle {
+	
+	field int x, y; //x and y coordinates of paddle
+	field int size; //size of paddle
+
+	/* creates Paddle object */
+	constructor Paddle new (int _x, int _y, int _size) {
+		//sets attributes
+		let x = _x; 
+		let y = _y;
+		let size = _size;
+		//draws shape
+		do draw();
+		return this;
+	}
+
+	/* destroys allocated memory */
+	method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /* draws paddle on screen */
+   method void draw() {
+   	  do Screen.setColor(true); //displays shape
+   	  do Screen.drawRectangle(x, y, x + size, y + size);
+   	  return;
+   }
+
+   /* erases paddle from scren */ 
+   method void erase() {
+   	  do Screen.setColor(false);
+   	  do Screen.drawRectangle(x, y, x + size, y + size);
+   	  return;
+   }
+
+   /* moves paddle up by 2 pixels, method taken from Square.jack example */
+   method void moveUp() {
+	  if (y > 1) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, (y + size) - 1, x + size, y + size);
+         let y = y - 2;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, y, x + size, y + 1);
+      }
+      return;
+   }
+
+	/* moves paddle down by 2 pixels, method taken from Square.jack example */
+   method void moveDown() {
+   	  if ((y + size) < 254) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, y, x + size, y + 1);
+         let y = y + 2;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, (y + size) - 1, x + size, y + size);
+      }
+      return;
+   }
+
+   /* moves paddle right by 2 pixels, method taken from Square.jack example */
+   method void moveRight() {
+      if ((x + size) < 510) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, y, x + 1, y + size);
+         let x = x + 2;
+         do Screen.setColor(true);
+         do Screen.drawRectangle((x + size) - 1, y, x + size, y + size);
+      }
+      return;
+   }
+
+   /* moves paddle left by 2 pixels, method taken from Square.jack example */
+   method void moveLeft() {
+	  if (x > 1) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle((x + size) - 1, y, x + size, y + size);
+         let x = x - 2;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, y, x + 1, y + size);
+      }
+      return;
+   }
+
+   /* describes movement of paddle with keypress */
+   method void move() {
+   	  if ( keyPressed() != 0) {
+   	  	if ( keyPressed() == 'a' ){
+   	  		moveLeft();
+   	  	} else if ( keyPressed() == 'd' ) {
+   	  		moveRight();
+   	  	} else if ( keyPressed() == 'w' ) {
+   	  		moveUp();
+   	  	} else if ( keyPressed() == 's' ) {
+   	  		moveDown();
+   	  	}
+   	  }
+   }
+
+}

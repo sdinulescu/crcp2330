@@ -1,0 +1,12 @@
+/** 
+** Pong Game
+** Main class
+** Created by Stejara Dinulescu
+**/
+
+class Main {
+   function void main() {
+      
+      
+   }
+}
