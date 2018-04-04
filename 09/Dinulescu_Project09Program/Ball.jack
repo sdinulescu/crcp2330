@@ -49,12 +49,13 @@ class Ball {
    method void move() {
    	  let x = x + xSpeed;
    	  let y = y + ySpeed;
-   	  if (x >= 256 || x <= 0) {
+   	  if (x = 200 | x = 15) {
    	  	let xSpeed = -xSpeed;
    	  } 
-   	  if (y >= 512 || y <= 0) {
+   	  if (y = 200 | y = 15) {
    	  	let ySpeed = -ySpeed;
    	  }
+   	  return;
    }
 
 }

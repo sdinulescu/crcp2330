@@ -10,10 +10,11 @@ class Pong {
 	field Paddle paddle2;
 
 	/** creates pong game */
-	constructor Pong new {
-		let ball = Ball.new(128, 256, 5);
-		let paddle1 = Paddle.new(0, 251);
-		let paddle2 = Paddle.new(251, 251);
+	constructor Pong new () {
+		let ball = Ball.new(256, 128, 5);
+		let paddle1 = Paddle.new(5, 128);
+		let paddle2 = Paddle.new(500, 128);
+		return this;
 	}
 
     /** disposes the game */
@@ -30,6 +31,7 @@ class Pong {
     	var char key;  // the key currently pressed by the user
       	var boolean exit;
       	let exit = false;
+      	let key = Keyboard.keyPressed();
       
       	while (~exit) {
       		if ( key = 113) { let exit = true; } 
@@ -41,7 +43,9 @@ class Pong {
 	    		do ball.move();
 	    		do paddle1.move();
 	    		do paddle2.move();
+	    		//do Screen.clearScreen();
 	    	}
 	    }
+	    return;
     }
 }
