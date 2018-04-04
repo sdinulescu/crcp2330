@@ -18,8 +18,8 @@ class Ball {
 		let x = _x; 
 		let y = _y;
 		let radius = _rad;
-		let xSpeed = 5;
-		let ySpeed = 5;
+		let xSpeed = 1;
+		let ySpeed = 1;
 		//draws shape
 		do draw();
 		return this;
@@ -49,11 +49,11 @@ class Ball {
    method void move() {
    	  let x = x + xSpeed;
    	  let y = y + ySpeed;
-   	  if (x = 200 | x = 15) {
-   	  	let xSpeed = -xSpeed;
+   	  if (x > 500 | x < 15) {
+   	  	let xSpeed = -1 * xSpeed;
    	  } 
-   	  if (y = 200 | y = 15) {
-   	  	let ySpeed = -ySpeed;
+   	  if (y > 230 | y < 15) {
+   	  	let ySpeed = -1 * ySpeed;
    	  }
    	  return;
    }

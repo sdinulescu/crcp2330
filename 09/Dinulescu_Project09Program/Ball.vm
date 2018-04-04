@@ -8,9 +8,9 @@ push argument 1
 pop this 1
 push argument 2
 pop this 2
-push constant 5
+push constant 1
 pop this 3
-push constant 5
+push constant 1
 pop this 4
 push pointer 0
 call Ball.draw 1
@@ -64,31 +64,35 @@ push this 4
 add
 pop this 1
 push this 0
-push constant 200
-eq
+push constant 500
+gt
 push this 0
 or
 push constant 15
-eq
+lt
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push this 3
+push constant 1
 neg
+push this 3
+call Math.multiply 2
 pop this 3
 label IF_FALSE0
 push this 1
-push constant 200
-eq
+push constant 230
+gt
 push this 1
 or
 push constant 15
-eq
+lt
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push this 4
+push constant 1
 neg
+push this 4
+call Math.multiply 2
 pop this 4
 label IF_FALSE1
 push constant 0

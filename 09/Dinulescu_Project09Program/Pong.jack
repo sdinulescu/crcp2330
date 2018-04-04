@@ -43,7 +43,7 @@ class Pong {
 	    		do ball.move();
 	    		do paddle1.move();
 	    		do paddle2.move();
-	    		//do Screen.clearScreen();
+	    		do Screen.clearScreen();
 	    	}
 	    }
 	    return;
