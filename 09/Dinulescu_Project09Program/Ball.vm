@@ -97,3 +97,18 @@ pop this 4
 label IF_FALSE1
 push constant 0
 return
+function Ball.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Ball.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Ball.getRadius 0
+push argument 0
+pop pointer 0
+push this 2
+return

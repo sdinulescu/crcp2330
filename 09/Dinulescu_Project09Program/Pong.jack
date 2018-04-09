@@ -8,12 +8,16 @@ class Pong {
 	field Ball ball;
 	field Paddle paddle1;
 	field Paddle paddle2;
+	field int paddle1Score;
+    field int paddle2Score;
 
 	/** creates pong game */
 	constructor Pong new () {
 		let ball = Ball.new(256, 128, 5);
 		let paddle1 = Paddle.new(5, 128);
 		let paddle2 = Paddle.new(500, 128);
+		let paddle1Score = 0;
+    	let paddle2Score = 0;
 		return this;
 	}
 
@@ -24,6 +28,37 @@ class Pong {
         do paddle2.dispose();
         do Memory.deAlloc(this);
         return;
+    }
+
+    method void collide() {
+    	var int ballX;
+    	let ballX = do ball.getX();
+    	var int ballRad;
+    	let ballRad = do ball.getRadius();
+    	var int paddle1X;
+    	let paddle1X = do paddle1.getX();
+    	var int paddle1Y;
+    	let paddle1Y = do ball.getY();
+    	var int paddle2X;
+    	let paddle2X = do paddle2.getX();
+    	var int paddle2Y;
+    	let paddle2Y = do ball.getY();
+
+    	if (  (ballX - ballRad) < paddle1X  ) {
+    		if ( (ballY < paddle1Y) ) {
+    			if ( (ballY > paddleY + 20) ) { 
+    				paddle1Score = paddle1Score + 1; 
+    			}
+    		}
+    	}
+
+    	if ( (ballX + ballRad) > paddle2X ) {
+			if ( (ballY < paddle2Y ) ) {
+    			if ( (ballY > paddle2Y + 20) ) { 
+    				paddle2Score = paddle2Score + 1; 
+    			}
+    		}
+    	}
     }
 
     /** runs the game */
@@ -45,6 +80,7 @@ class Pong {
 
 	    		if ( counter - ((counter/120) * 120) = 0 ) {
 	    			do ball.move();
+	    			do collide();
 
 	    			if (key = 131) {
 						do paddle1.moveUp();
@@ -59,6 +95,8 @@ class Pong {
 
 	    		do Screen.clearScreen();
 	    		let counter = counter + 1;
+	    		do Output.printInt(paddle1Score);
+	    		do Output.printInt(paddle2Score);
 	    	}
 	    }
 	    return;
