@@ -30,20 +30,35 @@ class Pong {
     method void run() {
     	var char key;  // the key currently pressed by the user
       	var boolean exit;
+      	var int counter;
       	let exit = false;
-      	let key = Keyboard.keyPressed();
-      
+      	let counter = 0;
+      	
+     
       	while (~exit) {
+      		let key = Keyboard.keyPressed();
       		if ( key = 113) { let exit = true; } 
       		else {
 	    		do ball.draw();
 	    		do paddle1.draw();
 	    		do paddle2.draw();
 
-	    		do ball.move();
-	    		do paddle1.move();
-	    		do paddle2.move();
+	    		if ( counter - ((counter/120) * 120) = 0 ) {
+	    			do ball.move();
+
+	    			if (key = 131) {
+						do paddle1.moveUp();
+	    				do paddle2.moveUp();
+					}
+
+					if (key = 133) {
+						do paddle1.moveDown();
+	    				do paddle2.moveDown();
+					}
+	    		}
+
 	    		do Screen.clearScreen();
+	    		let counter = counter + 1;
 	    	}
 	    }
 	    return;
