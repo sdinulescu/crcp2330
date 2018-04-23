@@ -4,23 +4,27 @@
 
 class Parser:
     command = ""  # type: str
+    curr_file = ""
 
     # constructor
     def __init__(self, read_file):
         print('parser object created')
-        my_text = read_file.readlines()  # reads whole text file
+        self.curr_file = read_file
         pass
 
     # file still has more to parse?
     @property
     def has_more_commands(self):
-        # if ():
+        if self.curr_file is None: # if eof
+            return 1
+        else:
             return 0
 
+    # Reads the next command from the input and makes it the current command.
+    # Should be called only if has_more_commands() is true, initially there is no current command
     def advance(self):
-        # Reads the next command from the input and makes it the current command.
-        # Should be called only if hasMoreCommands() is true.
-        # Initially there is no current command
+        if self.has_more_commands() is 0:
+            self.curr_file.read()
         return
 
     # returns the command type

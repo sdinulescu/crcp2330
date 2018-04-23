@@ -7,8 +7,10 @@ input_file = open("test.txt")
 
 
 def main():
-    code = Code.Code() # instance of a code module
-    parser = Parser.Parser(input_file) # instance of a parser module, taking in the input file
+    # instance of a code module
+    code = Code.Code()
+    # instance of a parser module, taking in the input file
+    parser = Parser.Parser(input_file)
 
     print("Hello World!")
 
