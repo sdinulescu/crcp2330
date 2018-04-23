@@ -3,8 +3,8 @@ from Code import Code
 from SymbolTable import SymbolTable
 
 def main():
-    codeFunc = Code()
-    parserFunc = Parser()
+    code = Code()
+    parser = Parser()
 
     print("Hello World!")
 
