@@ -6,6 +6,7 @@ class Code:
 
     # constructor
     def __init__(self):
+        print('code object created')
         pass
 
     # returns whether or not it is an A command

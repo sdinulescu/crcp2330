@@ -7,13 +7,19 @@
 
 
 class Parser:
-    command = ""
-# constructor for parser module -> opens input file and gets ready to parse it
+    command = ""  # type: str
 
-    def hasMoreCommands(self):
-        #if (): #file still has more to parse
+    # constructor
+    def __init__(self):
+        print('parser object created')
+        my_text = self.readlines()  # reads to whole text file, skipping first 4 lines
+        pass
+
+    # file still has more to parse?
+    @property
+    def has_more_commands(self):
+        # if ():
             return 0
-
 
     def advance(self):
         # Reads the next command from the input and makes it the current command.
@@ -22,7 +28,8 @@ class Parser:
         return
 
     # returns the command type
-    def commandType(self):
+    @property
+    def command_type(self):
         t = ""
         if self.command.get_value(0) == "@":
             t = "A_COMMAND"
@@ -34,24 +41,25 @@ class Parser:
             t = "L_COMMAND"
         return t
 
-
+    @property
     def symbol(self):
         # only when command type is A or L
         symb = ""
         return symb
 
-
+    @property
     def dest(self):
         # only called when command type is C
         d = ""
         return d
 
-
+    @property
     def comp(self):
         # only called when command type is C
         c = ""
         return c
 
+    @property
     def jump(self):
         # only called when command type is C
         j = ""
