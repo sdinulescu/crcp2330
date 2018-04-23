@@ -1,18 +1,14 @@
 # PARSER MODULE
 # Stejara Dinulescu
 
-# Encapsulates access to the input code. Reads an assembly language command,
-# parses it, and provides convenient access to the command’s components
-# (fields and symbols). In addition, removes all white space and comments.
-
 
 class Parser:
     command = ""  # type: str
 
     # constructor
-    def __init__(self):
+    def __init__(self, read_file):
         print('parser object created')
-        my_text = self.readlines()  # reads to whole text file, skipping first 4 lines
+        my_text = read_file.readlines()  # reads to whole text file, skipping first 4 lines
         pass
 
     # file still has more to parse?
