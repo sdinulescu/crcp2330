@@ -8,7 +8,7 @@ class Parser:
     # constructor
     def __init__(self, read_file):
         print('parser object created')
-        my_text = read_file.readlines()  # reads to whole text file, skipping first 4 lines
+        my_text = read_file.readlines()  # reads whole text file
         pass
 
     # file still has more to parse?
