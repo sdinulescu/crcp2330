@@ -15,7 +15,7 @@ class Parser:
     # file still has more to parse?
     @property
     def has_more_commands(self):
-        if self.curr_file is None: # if eof
+        if self.curr_file is None:  # if eof
             return 1
         else:
             return 0
@@ -44,26 +44,39 @@ class Parser:
     @property
     def symbol(self):
         # only when command type is A or L
-        symb = ""
-        return symb
+        s = ""
+        if self.command_type is "A_COMMAND" or "L_COMMAND":
+            return s
+        else:
+            return "Must be called on an L_COMMAND"
 
     @property
     def dest(self):
-        # only called when command type is C
+        # only called when command type is D
         d = ""
-        return d
+        if self.command_type is "D_COMMAND":
+            return d
+        else:
+            return "Must be called on a D_COMMAND"
 
     @property
     def comp(self):
         # only called when command type is C
         c = ""
-        return c
+        if self.command_type is "C_COMMAND":
+            return c
+        else:
+            return "Must be called on a C_COMMAND"
 
     @property
     def jump(self):
         # only called when command type is C
         j = ""
-        return j
+        if self.command_type is "C_COMMAND":
+            return j
+        else:
+            return "Must be called on a C_COMMAND"
+
 
 
 
