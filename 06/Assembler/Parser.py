@@ -1,6 +1,10 @@
 # PARSER MODULE
 # Stejara Dinulescu
 
+# Encapsulates access to the input code. Reads an assembly language command,
+# parses it, and provides convenient access to the command’s components
+# (fields and symbols). In addition, removes all white space and comments.
+
 
 class Parser:
     command = ""
