@@ -19,12 +19,16 @@ class Parser:
 
     # returns the command type
     def commandType(self):
-        type = ""
-        if (self.command.get_value(0) == "@"): type = "A_COMMAND"
-        if ("=" in self.command): type = "C_COMMAND"
-        if (";" in self.command): type = "C_COMMAND"
-        else: type = "L_COMMAND"
-        return type
+        t = ""
+        if self.command.get_value(0) == "@":
+            t = "A_COMMAND"
+        if "=" in self.command:
+            t = "C_COMMAND"
+        if ";" in self.command:
+            t = "C_COMMAND"
+        else:
+            t = "L_COMMAND"
+        return t
 
 
     def symbol(self):
