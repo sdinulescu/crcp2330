@@ -13,7 +13,7 @@ class Code:
     @property
     def decide_a(self):
         a = 0
-        if self.get_value(0) == 1:
+        if int(str(self)[:1]) == 1:
             a = 1
         return a
 

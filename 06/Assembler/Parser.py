@@ -23,7 +23,7 @@ class Parser:
     # Reads the next command from the input and makes it the current command.
     # Should be called only if has_more_commands() is true, initially there is no current command
     def advance(self):
-        if self.has_more_commands() is 0:
+        if self.has_more_commands is 0:
             self.curr_file.read()
         return
 
@@ -31,7 +31,7 @@ class Parser:
     @property
     def command_type(self):
         t = ""
-        if self.command.get_value(0) == "@":
+        if "@" in self.command:
             t = "A_COMMAND"
         if "=" in self.command:
             t = "C_COMMAND"
@@ -51,28 +51,28 @@ class Parser:
             return "Must be called on an L_COMMAND"
 
     @property
-    def dest(self):
-        # only called when command type is D
+    def dest(self, string):
+        # only called when command type is C
         d = ""
-        if self.command_type is "D_COMMAND":
+        if string.command_type is "C_COMMAND":
             return d
         else:
-            return "Must be called on a D_COMMAND"
+            return "Must be called on a C_COMMAND"
 
     @property
-    def comp(self):
+    def comp(self, string):
         # only called when command type is C
         c = ""
-        if self.command_type is "C_COMMAND":
+        if string.command_type is "C_COMMAND":
             return c
         else:
             return "Must be called on a C_COMMAND"
 
     @property
-    def jump(self):
+    def jump(self, string):
         # only called when command type is C
         j = ""
-        if self.command_type is "C_COMMAND":
+        if string.command_type is "C_COMMAND":
             return j
         else:
             return "Must be called on a C_COMMAND"

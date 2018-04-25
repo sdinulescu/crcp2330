@@ -5,7 +5,7 @@
 class SymbolTable:
     # constructor
     def __init__(self):
-        print('symbol table object created')
+        print("symbol table object created")
         pass
 
     # add to symbol table
