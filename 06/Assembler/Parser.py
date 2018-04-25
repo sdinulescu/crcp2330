@@ -9,16 +9,20 @@ class Parser:
     # constructor
     def __init__(self, read_file):
         print('parser object created')
+        print(read_file)
         self.curr_file = read_file
         pass
 
     # file still has more to parse?
     @property
     def has_more_commands(self):
+        print(self.curr_file)
         if self.curr_file is None:  # if eof
-            return 1
+            print("eof")
+            return False
         else:
-            return 0
+            print("keep going")
+            return True
 
     # Reads the next command from the input and makes it the current command.
     # Should be called only if has_more_commands() is true, initially there is no current command

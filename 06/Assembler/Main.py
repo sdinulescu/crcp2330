@@ -17,7 +17,8 @@ def main():
     # instance of a parser module, taking in the input file
     parser = Parser.Parser(input_file)
 
-    while parser.has_more_commands() is 1:
+    print("before while")
+    while parser.has_more_commands() is True:
         print("while loop")
         line = ""
         bit = 0
