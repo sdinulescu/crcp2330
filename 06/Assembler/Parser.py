@@ -26,10 +26,12 @@ class Parser:
 
     # Reads the next command from the input and makes it the current command.
     # Should be called only if has_more_commands() is true, initially there is no current command
+    @property
     def advance(self):
-        if self.has_more_commands is 1:
+        if self.has_more_commands == 1:
             print("advance file")
-            return self.curr_file.read()
+            line = self.curr_file.readline()
+            return line
         else:
             print("no more lines")
             return "eof"

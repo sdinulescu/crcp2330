@@ -17,23 +17,20 @@ def main():
     # instance of a parser module, taking in the input file
     p = Parser.Parser(input_file)
 
-    print("before while")
     # b = bool(p.has_more_commands())
     while p.has_more_commands == 1:
-        print("while loop")
         line = ""
         bit = 0
-        print("var initialization")
-        line = p.advance()
-        # print(line)
-        ctype = p.command_type(line)
-        print("after cType")
-        if ctype is "C_COMMAND":
-            print("C")
-            bit = assemble(code.decide_a(line), code.comp(line), code.dest(line), code.jump(line))
-            output_file.write(bit)
-        else:
-            print('A_COMMAND')
+        line = p.advance
+        print(line)
+        # ctype = p.command_type(line)
+        # print("after cType")
+        # if ctype is "C_COMMAND":
+            # print("C")
+            # bit = assemble(code.decide_a(line), code.comp(line), code.dest(line), code.jump(line))
+            # output_file.write(bit)
+        # else:
+            # print('A_COMMAND')
     return
 
 
