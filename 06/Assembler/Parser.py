@@ -6,6 +6,8 @@ class Parser:
     command = ""  # type: str
     curr_file = ""
     lines = ""
+    num = 0
+    curr_num = 0
 
     # constructor
     def __init__(self, read_file):
@@ -13,15 +15,18 @@ class Parser:
         print(read_file)
         self.curr_file = read_file
         self.lines = read_file.readlines()
+        self.num = len(self.lines)
         print(self.lines)
+        print(self.num)
         pass
 
     # file still has more to parse?
     @property
     def has_more_commands(self):
-        # print(self.curr_file)
-        if self.curr_file.readline().rstrip() == "":  # if eof
-            print("eof")
+        self.curr_num = self.curr_num + 1
+        print(self.curr_num)
+        if self.num < self.curr_num:
+            print("stop")
             return 0
         else:
             print("keep going")
