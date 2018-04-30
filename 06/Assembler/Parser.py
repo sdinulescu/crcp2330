@@ -16,15 +16,12 @@ class Parser:
         self.curr_file = read_file
         self.lines = read_file.readlines()
         self.num = len(self.lines)
-        print(self.lines)
-        print(self.num)
         pass
 
     # file still has more to parse?
     @property
     def has_more_commands(self):
         self.curr_num = self.curr_num + 1
-        print(self.curr_num)
         if self.num < self.curr_num:
             print("stop")
             return 0
@@ -38,10 +35,10 @@ class Parser:
     def advance(self):
         if self.has_more_commands == 1:
             print("advance file")
-            line = self.curr_file.readline().rstrip()
-            if "//" not in line:
+            if "//" not in self.lines[self.curr_num]:
                 print("good line")
-                return line
+                print(self.lines[self.curr_num])
+                return self.lines[self.curr_num]
             else:
                 print("commented line")
                 return "0"

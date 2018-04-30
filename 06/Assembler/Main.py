@@ -20,7 +20,6 @@ def main():
     while p.has_more_commands is 1:
         print(p.has_more_commands)
         line = p.advance
-        print(line)
         # ctype = p.command_type(line)
         # print("after cType")
         # if ctype is "C_COMMAND":
