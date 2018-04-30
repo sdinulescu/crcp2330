@@ -5,19 +5,22 @@
 class Parser:
     command = ""  # type: str
     curr_file = ""
+    lines = ""
 
     # constructor
     def __init__(self, read_file):
-        print('parser object created')
+        print("parser object created")
         print(read_file)
         self.curr_file = read_file
+        self.lines = read_file.readlines()
+        print(self.lines)
         pass
 
     # file still has more to parse?
     @property
     def has_more_commands(self):
         # print(self.curr_file)
-        if self.curr_file is None:  # if eof
+        if self.curr_file.readline().rstrip() == "":  # if eof
             print("eof")
             return 0
         else:
@@ -30,8 +33,13 @@ class Parser:
     def advance(self):
         if self.has_more_commands == 1:
             print("advance file")
-            line = self.curr_file.readline()
-            return line
+            line = self.curr_file.readline().rstrip()
+            if "//" not in line:
+                print("good line")
+                return line
+            else:
+                print("commented line")
+                return "0"
         else:
             print("no more lines")
             return "eof"

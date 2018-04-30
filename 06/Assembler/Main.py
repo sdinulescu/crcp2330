@@ -17,10 +17,8 @@ def main():
     # instance of a parser module, taking in the input file
     p = Parser.Parser(input_file)
 
-    # b = bool(p.has_more_commands())
-    while p.has_more_commands == 1:
-        line = ""
-        bit = 0
+    while p.has_more_commands is 1:
+        print(p.has_more_commands)
         line = p.advance
         print(line)
         # ctype = p.command_type(line)
@@ -31,6 +29,7 @@ def main():
             # output_file.write(bit)
         # else:
             # print('A_COMMAND')
+
     return
 
 
