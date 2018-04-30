@@ -16,20 +16,24 @@ class Parser:
     # file still has more to parse?
     @property
     def has_more_commands(self):
-        print(self.curr_file)
+        # print(self.curr_file)
         if self.curr_file is None:  # if eof
             print("eof")
-            return False
+            return 0
         else:
             print("keep going")
-            return True
+            return 1
 
     # Reads the next command from the input and makes it the current command.
     # Should be called only if has_more_commands() is true, initially there is no current command
     def advance(self):
-        if self.has_more_commands is 0:
-            self.curr_file.read()
-        return
+        if self.has_more_commands is 1:
+            print("advance file")
+            return self.curr_file.read()
+        else:
+            print("no more lines")
+            return "eof"
+
 
     # returns the command type
     @property

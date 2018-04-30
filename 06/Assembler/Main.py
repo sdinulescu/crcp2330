@@ -15,16 +15,21 @@ def main():
     # instance of a code module
     code = Code.Code()
     # instance of a parser module, taking in the input file
-    parser = Parser.Parser(input_file)
+    p = Parser.Parser(input_file)
 
     print("before while")
-    while parser.has_more_commands() is True:
+    # b = bool(p.has_more_commands())
+    while p.has_more_commands == 1:
         print("while loop")
         line = ""
         bit = 0
-        line = parser.advance()
-        ctype = parser.command_type(line)
+        print("var initialization")
+        line = p.advance()
+        # print(line)
+        ctype = p.command_type(line)
+        print("after cType")
         if ctype is "C_COMMAND":
+            print("C")
             bit = assemble(code.decide_a(line), code.comp(line), code.dest(line), code.jump(line))
             output_file.write(bit)
         else:
