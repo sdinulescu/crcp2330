@@ -1,23 +1,32 @@
 // whatever file the assembler will read in to parse
 String input_file = "MaxL.asm";
-String output_file = "test.txt";
+PrintWriter output_file;
+
+String  assemble(int a, int comp, int dest, int jump) {
+  String a_s = "" + a;
+  String comp_s = "" + comp;
+  String dest_s = "" + dest;
+  String jump_s = "" + jump;
+  return ("111" + a_s + comp_s + dest_s + jump_s);
+}
 
 void setup() {
-    // instance of a code module
-    Code code = new Code();
-    // instance of a parser module, taking in the input file
-    Parser parser = new Parser(input_file);
+  output_file = createWriter("output.txt");
+  // instance of a code module
+  Code code = new Code();
+  // instance of a parser module, taking in the input file
+  Parser parser = new Parser(input_file);
 
-    while (parser.has_more_commands() == true){
-        String line = parser.advance();
-        //ctype = parser.command_type(line)
-        //print(ctype)
-        //if ctype is "C_COMMAND":
-            //print("C")
-            //bit = assemble(code.decide_a(line), code.comp(line), code.dest(line), code.jump(line))
-            //output_file.write(bit)
-        //else:
-            //print('A_COMMAND')
-            
+  while (parser.has_more_commands() == true) {
+    String line = parser.advance();
+    String ctype = parser.command_type();
+    println(ctype);
+    print();
+    if (ctype == "C_COMMAND") { //C Commands
+      String bit = assemble(code.decide_a(line), code.comp(line), code.dest(line), code.jump(line));
+      println(bit);
+      //output_file.println(bit);
+    } else { //A Commands
     }
+  }
 }
