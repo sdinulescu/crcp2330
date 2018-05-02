@@ -18,10 +18,9 @@ def main():
     p = Parser.Parser(input_file)
 
     while p.has_more_commands is 1:
-        print(p.has_more_commands)
         line = p.advance
-        # ctype = p.command_type(line)
-        # print("after cType")
+        ctype = p.command_type(line)
+        print(ctype)
         # if ctype is "C_COMMAND":
             # print("C")
             # bit = assemble(code.decide_a(line), code.comp(line), code.dest(line), code.jump(line))

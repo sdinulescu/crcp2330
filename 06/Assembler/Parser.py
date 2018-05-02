@@ -3,7 +3,6 @@
 
 
 class Parser:
-    command = ""  # type: str
     curr_file = ""
     lines = ""
     num = 0
@@ -14,33 +13,37 @@ class Parser:
         print("parser object created")
         print(read_file)
         self.curr_file = read_file
-        self.lines = read_file.readlines()
+        self.lines = read_file.read().splitlines()
         self.num = len(self.lines)
+        self.num = self.num - 1
+        # print(self.lines)
         pass
 
     # file still has more to parse?
     @property
     def has_more_commands(self):
-        self.curr_num = self.curr_num + 1
-        if self.num < self.curr_num:
-            print("stop")
+        print(self.curr_num)
+        print(self.num)
+        if self.num == self.curr_num:
+            # print("stop")
             return 0
         else:
-            print("keep going")
+            # print("keep going")
             return 1
 
     # Reads the next command from the input and makes it the current command.
     # Should be called only if has_more_commands() is true, initially there is no current command
     @property
     def advance(self):
-        if self.has_more_commands == 1:
-            print("advance file")
+        if self.curr_num < self.num:
+            self.curr_num = (self.curr_num + 1)
+            # print("advance file")
             if "//" not in self.lines[self.curr_num]:
-                print("good line")
+                # print("good line")
                 print(self.lines[self.curr_num])
                 return self.lines[self.curr_num]
             else:
-                print("commented line")
+                # print("commented line")
                 return "0"
         else:
             print("no more lines")
@@ -49,13 +52,13 @@ class Parser:
 
     # returns the command type
     @property
-    def command_type(self):
+    def command_type(line):
         t = ""
-        if "@" in self.command:
+        if "@" in line:
             t = "A_COMMAND"
-        if "=" in self.command:
+        if "=" in line:
             t = "C_COMMAND"
-        if ";" in self.command:
+        if ";" in line:
             t = "C_COMMAND"
         else:
             t = "L_COMMAND"
