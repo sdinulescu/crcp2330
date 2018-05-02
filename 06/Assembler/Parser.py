@@ -53,12 +53,11 @@ class Parser:
     # returns the command type
     @property
     def command_type(line):
-        t = ""
-        if "@" in line:
+        if '@' in line:
             t = "A_COMMAND"
-        if "=" in line:
+        if '=' in line:
             t = "C_COMMAND"
-        if ";" in line:
+        if ';' in line:
             t = "C_COMMAND"
         else:
             t = "L_COMMAND"
