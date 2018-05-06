@@ -17,26 +17,17 @@ void setup() {
   while (parser.has_more_commands() == true) {
     String line = parser.advance();
     String ctype = parser.command_type();
-    println(ctype);
-    print();
+    //println(ctype);
     if (  ctype.equals("C_COMMAND")  ) { //C Commands
-      String dest = parser.dest(line);
-      String comp = parser.comp(line);
-      String jump = parser.jump(line);
-      println("comp = " + comp + " dest = " + dest + " jump = " + jump);
-      
-      bit = assemble(code.comp(comp), code.dest(dest), code.jump(jump));
-      println("comp: " + code.comp(comp) + " dest: " + code.dest(dest) + " jump: " + code.jump(jump));
-      println("bit = " + bit);
-      
+      //println("comp: " + parser.comp(line) + " dest: " + parser.dest(line) + " jump: " + parser.jump(line) );
+      //println(  "comp: " + code.comp(  parser.comp(line)  ) + " dest: " + code.dest(  parser.dest(line)  ) + " jump: " + code.jump(  parser.jump(line)  )  );
+      bit = assemble(code.comp(parser.comp(line)), code.dest(parser.dest(line)), code.jump(parser.jump(line)));
     } else if (  ctype.equals("A_COMMAND")  ) { //A Commands
       bit = parser.handleA(line);
-      println("bit: " + bit);
-    } else {
-      println("PROBLEM");
-    }
-    if (bit.equals("")) {} else { output_file.println(bit); }
+    } else {}
+    println("bit: " + bit);
+    if (bit.equals("")) {} else { output_file.println(bit); } //print each bit as a line to the output file, ignore whitespace
   }
   
-  output_file.close();
+  output_file.close(); //close the file
 }
