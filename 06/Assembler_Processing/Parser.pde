@@ -2,6 +2,7 @@
 // Stejara Dinulescu
 
 class Parser {
+  String backwards = "";
   String curr_file = "";
   ArrayList<String> lines = new ArrayList<String>();
   ArrayList<String> type = new ArrayList<String>();
@@ -111,5 +112,26 @@ class Parser {
       j = "null";
     }
     return j;
+  }
+  
+  String handleA(String num) {
+    String bit = "";
+    int n = Integer.parseInt(  num.substring(  1, num.length()  )  );
+    numToBinary(n, bit);
+    for (int i = backwards.length() - 1; i >= 0; i--) {
+      bit = bit + backwards.charAt(i);
+    }
+    return bit;
+  }
+  
+  void numToBinary(int num, String bit) {
+    String bin = "";
+    int n = num/2;
+    int quotient = num%2;
+    bin = bit + quotient;
+    backwards = bin;
+    if (num >= 2) {
+      numToBinary(n, bin);
+    }
   }
 }
