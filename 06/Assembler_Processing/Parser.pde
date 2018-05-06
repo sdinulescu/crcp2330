@@ -115,12 +115,17 @@ class Parser {
   }
   
   String handleA(String num) {
-    String bit = "";
+    String forwards = "";
+    String bit = "1";
     int n = Integer.parseInt(  num.substring(  1, num.length()  )  );
-    numToBinary(n, bit);
+    numToBinary(n, forwards);
     for (int i = backwards.length() - 1; i >= 0; i--) {
-      bit = bit + backwards.charAt(i);
+      forwards = forwards + backwards.charAt(i);
     }
+    for (int i = 0; i < (15 - forwards.length()); i++) {
+      bit = bit + "0";
+    }
+    bit = bit + forwards;
     return bit;
   }
   

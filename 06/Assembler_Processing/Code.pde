@@ -19,8 +19,8 @@ class Code {
 
   // returns binary code of dest
   String dest(String d) {
-    String bit = "0";
-    if (d.equals("0")) { 
+    String bit = "";
+    if (d.equals("null")) { 
       bit = "000";
     } else if (d.equals("M")) { 
       bit = "001";

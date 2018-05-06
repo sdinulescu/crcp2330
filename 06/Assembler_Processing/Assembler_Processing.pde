@@ -31,7 +31,7 @@ void setup() {
     } else if (  ctype.equals("A_COMMAND")  ) { //A Commands
       String bit = parser.handleA(line);
       println("bit: " + bit);
-     
+      
     }
   }
 }
