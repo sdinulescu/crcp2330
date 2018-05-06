@@ -116,7 +116,7 @@ class Parser {
   
   String handleA(String num) {
     String forwards = "";
-    String bit = "1";
+    String bit = "0";
     int n = Integer.parseInt(  num.substring(  1, num.length()  )  );
     numToBinary(n, forwards);
     for (int i = backwards.length() - 1; i >= 0; i--) {
