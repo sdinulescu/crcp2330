@@ -44,7 +44,9 @@ class Parser {
         //println("commented line");
         return "0";
       }
-    } else { return "eof"; }
+    } else { 
+      return "eof";
+    }
   }
 
   // returns the command type
@@ -64,40 +66,50 @@ class Parser {
   }
 
   String symbol(String s) {
-      // only when command type is A or L
-      String str = ""; 
-      if (type.get(curr_num) == "A_COMMAND" || type.get(curr_num) == "L_COMMAND") { 
-        //DO SOMETHING HERE
-        return str; 
-      }
-      else { return "Must be called on an L_COMMAND"; }
+    // only when command type is A or L
+    String str = ""; 
+    if (type.get(curr_num) == "A_COMMAND" || type.get(curr_num) == "L_COMMAND") { 
+      //DO SOMETHING HERE
+      return str;
+    } else { 
+      return "Must be called on an L_COMMAND";
+    }
   }
 
-  String dest(String s) {
-      // only called when command type is C
-      String d = "";
-      if (type.get(curr_num) == "C_COMMAND") { 
-        //DO SOMETHING HERE
-        return d; 
-      }
-      else { return "Must be called on a C_COMMAND"; }
+  String dest(String line) {
+    // only called when command type is C
+    String d = "";
+    if ( line.contains(";") ) {
+      d = "null";
+    } else {
+      d = line.substring(0, 1); 
+    }
+    return d;
   }
 
-  String comp(String s) {
-      // only called when command type is C
-      String c = "";
-      if (type.get(curr_num) == "C_COMMAND") { 
-        return c; 
-      }
-      else { return "Must be called on a C_COMMAND"; }
+  String comp(String line) {
+    // only called when command type is C
+    String c = "";
+    if ( line.contains("=") ) { 
+      int index = line.indexOf("="); 
+      c = line.substring(index+1, line.length());
+    } else if ( line.contains(";") ) {
+      c = line.substring(0, 1);
+    } else { 
+      c = "null";
+    }
+    return c;
   } 
 
-  String jump(String s) {
-      // only called when command type is C
-      String j = ""; 
-      if(type.get(curr_num) == "C_COMMAND") { 
-        return j; 
-      }
-      else { return "Must be called on a C_COMMAND"; }
+  String jump(String line) {
+    // only called when command type is C
+    String j = ""; 
+    if ( line.contains(";") ) { 
+      int index = line.indexOf(";");
+      j = line.substring(index+1, line.length());
+    } else { 
+      j = "null";
+    }
+    return j;
   }
 }

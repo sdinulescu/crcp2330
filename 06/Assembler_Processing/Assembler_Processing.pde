@@ -2,12 +2,8 @@
 String input_file = "MaxL.asm";
 PrintWriter output_file;
 
-String  assemble(int a, int comp, int dest, int jump) {
-  String a_s = "" + a;
-  String comp_s = "" + comp;
-  String dest_s = "" + dest;
-  String jump_s = "" + jump;
-  return ("111" + a_s + comp_s + dest_s + jump_s);
+String  assemble(String comp, String dest, String jump) {
+  return ("111" + comp + dest + jump);
 }
 
 void setup() {
@@ -22,11 +18,19 @@ void setup() {
     String ctype = parser.command_type();
     println(ctype);
     print();
-    if (ctype == "C_COMMAND") { //C Commands
-      String bit = assemble(code.decide_a(line), code.comp(line), code.dest(line), code.jump(line));
-      println(bit);
+    if (  ctype.equals("C_COMMAND")  ) { //C Commands
+      String dest = parser.dest(line);
+      String comp = parser.comp(line);
+      String jump = parser.jump(line);
+      println("comp = " + comp + " dest = " + dest + " jump = " + jump);
+      
+      String bit = assemble(code.comp(comp), code.dest(dest), code.jump(jump));
+      println("comp: " + code.comp(comp) + " dest: " + code.dest(dest) + " jump: " + code.jump(jump));
+      println("bit = " + bit);
       //output_file.println(bit);
-    } else { //A Commands
+    } else if (  ctype.equals("A_COMMAND")  ) { //A Commands
+      
+    
     }
   }
 }
