@@ -53,15 +53,15 @@ class Parser {
   // returns the command type
   String command_type() {
     String t = "";
-    if (  lines.get(curr_num).contains("@")  ) { 
+    if (  lines.get(curr_num).contains("@") ) { 
       t = "A_COMMAND";
     } else if (  lines.get(curr_num).contains("=")   ||  lines.get(curr_num).contains(";")  ) { 
       t = "C_COMMAND";
     } else if (  lines.get(curr_num).contains("//")  ) { 
       t = "commented line";
-    } else { 
+    } else if ( lines.get(curr_num).contains("(") ) { 
       t = "L_COMMAND";
-    }
+    } else { t = "idk the type"; }
     type.add(t);
     return t;
   }
@@ -119,10 +119,8 @@ class Parser {
     String bit = "0";
     int n = Integer.parseInt(  num.substring(  1, num.length()  )  );
     numToBinary(n, forwards);
-    for (int i = backwards.length() - 1; i >= 0; i--) {
-      forwards = forwards + backwards.charAt(i);
-    }
-    for (int i = 0; i < (15 - forwards.length()); i++) {
+    bit = flipBinary(backwards);
+    for (int i = 0; i < (15 - forwards.length()); i++) { //converts into 16 bit word
       bit = bit + "0";
     }
     bit = bit + forwards;
@@ -139,4 +137,14 @@ class Parser {
       numToBinary(n, bin);
     }
   }
+  
+  String flipBinary(String b) {
+    String binary = "";
+    for (int i = b.length() - 1; i >= 0; i--) {
+      binary = binary + b.charAt(i);
+    }
+    return binary;
+  }
+  
+  
 }
