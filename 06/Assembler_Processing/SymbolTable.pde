@@ -9,7 +9,7 @@ class SymbolTable {
   HashMap<String,Integer> hm = new HashMap<String,Integer>();
   String backwards = "";
     
-  SymbolTable() {}
+  SymbolTable() {  }
     
   void addEntry(String symbol, int address){ // adds the pair to the table
       hm.put(symbol, address);
@@ -19,7 +19,10 @@ class SymbolTable {
   // returns whether or not symbol is in the hash table already
   boolean contains(String symbol){
     try {  hm.get(symbol);  }  
-    catch(NumberFormatException nfe) {  return false;  }  
+    catch(NumberFormatException nfe) {  
+      println("not in table");
+      return false;  
+    }  
     return true; 
   }  
 

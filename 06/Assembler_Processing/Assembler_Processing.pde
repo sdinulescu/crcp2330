@@ -8,7 +8,7 @@ String  assemble(String comp, String dest, String jump) {
   return ("111" + comp + dest + jump);
 }
 
-boolean isNumeric(String string) {  
+boolean isNumeric(String string) {  //checks if it is a numeric A command (ex. @1) or if it is a symbol (ex. @R1)
   try {  int d = Integer.parseInt(string);  }  
   catch(NumberFormatException nfe) {  return false;  }  
   return true;  
@@ -19,27 +19,49 @@ String removeCharAt(String s, int pos) {
   else {  return s.substring(0,pos)+s.substring(pos+1);  }
 }
 
+String removeSpaces(String s) {
+  String str = "";
+  for (int i = 0; i < s.length(); i++) {
+    if ( s.substring(i, i+1).equals(" ") ) { }
+    else {  str = str + s.substring(i, i+1);  }
+  }
+  return str;
+}
+String removeComments(String s) {
+  String str = "";
+  if ( s.contains("//") ) {
+    int index = s.indexOf('/');
+    str = s.substring(0, index);
+    return str;
+  } else {  return s;  }
+}
+
 void firstPass(Parser parser, SymbolTable symbolTable) {
   println("first pass");
   for (int i = 0; i < parser.lines.size(); i++) {
-    String str = parser.lines.get(i);
-    println("str: " + str);
-    println("does it contain @?: " + parser.lines.get(i).contains("@"));
-    println("is it numeric?: " + isNumeric( parser.lines.get(i).substring( 0, str.length() ) ) );
-    if (  str.contains("//")  ) { 
-      println("commented line, ignore"); 
-    } else if (  str.contains("@") && isNumeric( str.substring( 1, str.length() ) ) == false  )  { //symbol
-      str = removeCharAt(str, str.indexOf('@'));
-      println("SYMBOL: " + str);
-      //check if symbol is in the table
-      if (  symbolTable.contains(  str.substring(  1, str.length() - 1 )  )  == false ) { // if it is not in the table, add it
-        println("Not in table");
-        String num = symbolTable.numToBinary(  Integer.parseInt( str.substring(str.length() - 1, str.length() )), "");
-        println("num: " + num);
-        symbolTable.addEntry(  str.substring(1, str.length() - 1),  Integer.parseInt(num));
+    String o_str = parser.lines.get(i);
+    String bin = "";
+    o_str = removeSpaces(o_str);
+    o_str = removeComments(o_str);
+    println("o_str: " + o_str); 
+    if (  o_str.contains("@") && isNumeric( o_str.substring( 1, o_str.length() ) ) == false  )  { //symbol or label
+      //str = removeSpaces(str);
+      //str = removeComments(str);
+      if (o_str.charAt(1) == 'R') { // if memory address, parse into binary to put in symbol table
+        bin = o_str.substring(2, o_str.length());
+        println("normal num: " + bin);
+        int num = Integer.parseInt(bin);
+        bin = symbolTable.numToBinary(num, "");
+        println("binary num: " + bin);
       }
-    } else if ( str.contains("@") && isNumeric( str.substring( 1, str.length() ) ) == true ) { //label
-       println("label");
+      //check if symbol is in the table
+      println(symbolTable.contains(o_str));
+      if (  symbolTable.contains(  o_str  )  == false ) { // if it is not in the table, add it
+        println("Not in table");
+        symbolTable.addEntry(  o_str,  Integer.parseInt(bin));
+      }
+    } else if ( o_str.contains("@") && isNumeric( o_str.substring( 1, o_str.length() ) ) == true ) { //A_Command
+       println("numeric A command");
     } 
   }
 }
