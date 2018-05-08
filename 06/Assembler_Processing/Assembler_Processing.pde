@@ -37,6 +37,7 @@ String removeComments(String s) {
 }
 
 void firstPass(Parser parser, SymbolTable symbolTable) {
+  String address = "";
   println("first pass");
   for (int i = 0; i < parser.lines.size(); i++) {
     String o_str = parser.lines.get(i);
@@ -50,15 +51,11 @@ void firstPass(Parser parser, SymbolTable symbolTable) {
       if (o_str.charAt(1) == 'R') { // if memory address, parse into binary to put in symbol table
         bin = o_str.substring(2, o_str.length());
         println("normal num: " + bin);
-        int num = Integer.parseInt(bin);
-        bin = symbolTable.numToBinary(num, "");
-        println("binary num: " + bin);
+        address = symbolTable.handleA(bin);
       }
       //check if symbol is in the table
-      println(symbolTable.contains(o_str));
       if (  symbolTable.contains(  o_str  )  == false ) { // if it is not in the table, add it
-        println("Not in table");
-        symbolTable.addEntry(  o_str,  Integer.parseInt(bin));
+        symbolTable.addEntry(  o_str,  Integer.parseInt(address) );
       }
     } else if ( o_str.contains("@") && isNumeric( o_str.substring( 1, o_str.length() ) ) == true ) { //A_Command
        println("numeric A command");

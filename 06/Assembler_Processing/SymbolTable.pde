@@ -18,12 +18,9 @@ class SymbolTable {
     
   // returns whether or not symbol is in the hash table already
   boolean contains(String symbol){
-    try {  hm.get(symbol);  }  
-    catch(NumberFormatException nfe) {  
-      println("not in table");
-      return false;  
-    }  
-    return true; 
+    try {  int address = hm.get(symbol);  }  
+    catch(Exception e) {  return false;  } 
+    return true;
   }  
 
   // finds the address of the symbol
@@ -44,6 +41,18 @@ class SymbolTable {
       else if ( s.equals("KBD") ) { hexa = "0x6000"; }
       else if ( s.substring(0, 1).equals("R") ) { hexa = "0x000-f"; }
       return hexa;
+  }
+  
+  String handleA(String num) {
+    String forwards = "";
+    String bit = "0";
+    int n = Integer.parseInt(num);
+    bit = numToBinary(n, forwards);
+    for (int i = 0; i < (15 - forwards.length()); i++) { //converts into 16 bit word
+      bit = "0" + bit;
+    }
+    bit = bit + forwards;
+    return bit;
   }
   
   String numToBinary(int num, String bit) {
