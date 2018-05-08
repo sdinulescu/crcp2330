@@ -14,6 +14,13 @@ boolean isNumeric(String string) {  //checks if it is a numeric A command (ex. @
   return true;  
 }
 
+boolean isLabel(String s) {
+  if ( s.matches(".*\\d+.*") ) {
+    return false;
+  } else { return true; }
+}
+  
+
 String removeCharAt(String s, int pos) {
   if (pos == 0) {  return s.substring(1, s.length());  }
   else {  return s.substring(0,pos)+s.substring(pos+1);  }
@@ -45,22 +52,21 @@ void firstPass(Parser parser, SymbolTable symbolTable) {
     o_str = removeSpaces(o_str);
     o_str = removeComments(o_str);
     println("o_str: " + o_str); 
-    if (  o_str.contains("@") && isNumeric( o_str.substring( 1, o_str.length() ) ) == false  )  { //symbol or label
+    if (  o_str.contains("@") && isNumeric( o_str.substring( 1, o_str.length() ) ) == false && isLabel(o_str) == false )  { //symbol or label
       //str = removeSpaces(str);
       //str = removeComments(str);
-      if (o_str.charAt(1) == 'R') { // if memory address, parse into binary to put in symbol table
+      if (o_str.charAt(1) == 'R') { // @memoryAddress, parse into binary to put in symbol table
         bin = o_str.substring(2, o_str.length());
-        println("normal num: " + bin);
         address = symbolTable.handleA(bin);
-      }
+      } 
       //check if symbol is in the table
+      println(symbolTable.contains(  o_str  ) );
       if (  symbolTable.contains(  o_str  )  == false ) { // if it is not in the table, add it
-        symbolTable.addEntry(  o_str,  Integer.parseInt(address) );
+        symbolTable.addEntry(  o_str,  address );
       }
-    } else if ( o_str.contains("@") && isNumeric( o_str.substring( 1, o_str.length() ) ) == true ) { //A_Command
-       println("numeric A command");
-    } 
+    }
   }
+  println("SymbolTable: " + symbolTable.hm);
 }
 
 void secondPass(Parser parser, Code code) {

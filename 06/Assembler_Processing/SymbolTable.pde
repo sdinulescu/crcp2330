@@ -6,26 +6,25 @@ import java.util.*;
 
 class SymbolTable {
   
-  HashMap<String,Integer> hm = new HashMap<String,Integer>();
+  HashMap<String,String> hm = new HashMap<String,String>();
   String backwards = "";
     
   SymbolTable() {  }
     
-  void addEntry(String symbol, int address){ // adds the pair to the table
+  void addEntry(String symbol, String address){ // adds the pair to the table
       hm.put(symbol, address);
       println("Entry added! Symbol: " + symbol + " Address: " + address);
   }
     
   // returns whether or not symbol is in the hash table already
   boolean contains(String symbol){
-    try {  int address = hm.get(symbol);  }  
-    catch(Exception e) {  return false;  } 
-    return true;
+    if ( hm.get(symbol) == null ) { return false; }
+    else {  return true; }
   }  
 
   // finds the address of the symbol
-  int getAddress(String symbol){
-      int address = hm.get(symbol);
+  String getAddress(String symbol){
+      String address = hm.get(symbol);
       return address;
   }
   
