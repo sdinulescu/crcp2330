@@ -4,6 +4,10 @@ String input_file = "Max.asm";
 PrintWriter output_file;
 String bit = "";
 
+Parser parser; 
+Code code;
+SymbolTable symbolTable;
+
 String  assemble(String comp, String dest, String jump) {
   return ("111" + comp + dest + jump);
 }
@@ -43,14 +47,16 @@ String removeComments(String s) {
   } else {  return s;  }
 }
 
-void firstPass(Parser parser, SymbolTable symbolTable) {
+void firstPass(Parser parser, SymbolTable symbolTable) { //puts everything into symbol table
   String address = "";
+  int count = 0;
   println("first pass");
   for (int i = 0; i < parser.lines.size(); i++) {
     String o_str = parser.lines.get(i);
     String bin = "";
     o_str = removeSpaces(o_str);
     o_str = removeComments(o_str);
+    parser.lines.set(i, o_str);
     println("o_str: " + o_str); 
     if (  o_str.contains("@") && isNumeric( o_str.substring( 1, o_str.length() ) ) == false && isLabel(o_str) == false )  { //symbol or label
       //str = removeSpaces(str);
@@ -64,6 +70,13 @@ void firstPass(Parser parser, SymbolTable symbolTable) {
       if (  symbolTable.contains(  o_str  )  == false ) { // if it is not in the table, add it
         symbolTable.addEntry(  o_str,  address );
       }
+    } else if ( o_str.contains("@") && isLabel(o_str) == true) {
+      String designatedAddress = "1" + count;
+      count += 2;
+      println("designatedAddress: " + designatedAddress);
+      designatedAddress = symbolTable.handleA(  designatedAddress  );
+      println("designatedAddress: " + designatedAddress);
+      symbolTable.addEntry(  o_str, designatedAddress  );
     }
   }
   println("SymbolTable: " + symbolTable.hm);
@@ -72,33 +85,51 @@ void firstPass(Parser parser, SymbolTable symbolTable) {
 void secondPass(Parser parser, Code code) {
   println("second pass");
   while (parser.has_more_commands() == true) {
+    bit = "";
     String line = parser.advance();
     String ctype = parser.command_type();
-    //println(ctype);
+    println("line: " + line);
+    println("ctype: " + ctype);
     if (  ctype.equals("C_COMMAND")  ) { //C Commands
       //println("comp: " + parser.comp(line) + " dest: " + parser.dest(line) + " jump: " + parser.jump(line) );
       //println(  "comp: " + code.comp(  parser.comp(line)  ) + " dest: " + code.dest(  parser.dest(line)  ) + " jump: " + code.jump(  parser.jump(line)  )  );
       bit = assemble(code.comp(parser.comp(line)), code.dest(parser.dest(line)), code.jump(parser.jump(line)));
-    } else if (  ctype.equals("A_COMMAND")  ) { //A Commands
-      bit = parser.handleA(line);
-    } else {}
-    println("bit: " + bit);
-    if (bit.equals("")) {} else { output_file.println(bit); } //print each bit as a line to the output file, ignore whitespace
+    } else if (  ctype.equals("A_COMMAND")   ) { //A Commands
+      if ( isNumeric (ctype) ) {
+        bit = parser.handleA(line);
+      } else {
+        println("check symbol table");
+        if (symbolTable.contains(line)) {
+        bit = symbolTable.hm.get(line);
+        } else { 
+          println("not in symbolTable"); 
+          ctype = "L_COMMAND";
+          parser.labels.add(line.substring(1, line.length()));
+        }
+        println("bit from symbolTable: " + bit);
+      }
+    } 
+    output_file.write(bit);
+    println("ctype: " + ctype);
+    if (  ctype.equals("L_COMMAND") && !line.contains("(") ) { // handle label
+      output_file.write(bit);
+      bit = symbolTable.hm.get(line);
+    }
+    
+    output_file.close(); //close the file
   }
-  
-  output_file.close(); //close the file
 }
 
 void setup() {
-  output_file = createWriter("output.hack");
+  output_file = createWriter("output_MAX.hack");
   // instance of the code module
-  Code code = new Code();
+  code = new Code();
   // instance of the parser module, taking in the input file
-  Parser parser = new Parser(input_file);
+  parser = new Parser(input_file);
   // instance of the symbol table module
-  SymbolTable symbolTable = new SymbolTable();
+  symbolTable = new SymbolTable();
   
   firstPass(parser, symbolTable);
-  //secondPass(parser, code);
+  secondPass(parser, code);
 
 }

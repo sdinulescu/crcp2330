@@ -6,6 +6,7 @@ class Parser {
   String curr_file = "";
   ArrayList<String> lines = new ArrayList<String>();
   ArrayList<String> type = new ArrayList<String>();
+  ArrayList<String> labels = new ArrayList<String>();
   int num = 0;
   int curr_num = 0;
 
@@ -53,7 +54,7 @@ class Parser {
   // returns the command type
   String command_type() {
     String t = "";
-    if (  lines.get(curr_num).contains("@") ) { 
+    if (  lines.get(curr_num).contains("@")  ) { 
       t = "A_COMMAND";
     } else if (  lines.get(curr_num).contains("=")   ||  lines.get(curr_num).contains(";")  ) { 
       t = "C_COMMAND";
