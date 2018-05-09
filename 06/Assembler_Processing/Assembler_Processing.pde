@@ -141,7 +141,7 @@ void draw() {
   GUI();
   if (key == '\n') { 
     input_file = saved;
-    saved = input_file.substring(1, input_file.length() - 4);
+    saved = input_file.substring(0, input_file.length() - 4);
     output_file = createWriter(saved + ".hack");
     // instance of the code module
     code = new Code();
