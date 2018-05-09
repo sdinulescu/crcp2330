@@ -1,6 +1,6 @@
 // whatever file the assembler will read in to parse
 
-String input_file = "Pong.asm";
+String input_file = "Rect.asm";
 PrintWriter output_file;
 String bit = "";
 
