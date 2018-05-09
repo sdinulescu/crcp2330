@@ -116,20 +116,21 @@ class Parser {
   }
   
   String handleA(String num) {
-    println("num: " + num);
+    println("original: " + num);
     String forwards = "";
     String bit = "0";
-    int n = Integer.parseInt(  num  );
-    numToBinary(n, forwards);
-    bit = flipBinary(backwards);
+    int n = Integer.parseInt(  num   );
+    println("integer: " + n);
+    bit = numToBinary(n, forwards);
     for (int i = 0; i < (16 - backwards.length()); i++) { //converts into 16 bit word
-      bit = bit + "0";
+      bit = "0" + bit;
     }
     bit = bit + forwards;
     return bit;
   }
   
-  void numToBinary(int num, String bit) {
+  
+  String numToBinary(int num, String bit) {
     String bin = "";
     int n = num/2;
     int quotient = num%2;
@@ -138,6 +139,8 @@ class Parser {
     if (num >= 2) {
       numToBinary(n, bin);
     }
+    String done = flipBinary(backwards);
+    return done;
   }
   
   String flipBinary(String b) {
@@ -147,6 +150,7 @@ class Parser {
     }
     return binary;
   }
+    
   
   
 }
