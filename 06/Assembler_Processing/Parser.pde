@@ -116,12 +116,13 @@ class Parser {
   }
   
   String handleA(String num) {
+    println("num: " + num);
     String forwards = "";
     String bit = "0";
-    int n = Integer.parseInt(  num.substring(  1, num.length()  )  );
+    int n = Integer.parseInt(  num  );
     numToBinary(n, forwards);
     bit = flipBinary(backwards);
-    for (int i = 0; i < (15 - forwards.length()); i++) { //converts into 16 bit word
+    for (int i = 0; i < (16 - backwards.length()); i++) { //converts into 16 bit word
       bit = bit + "0";
     }
     bit = bit + forwards;

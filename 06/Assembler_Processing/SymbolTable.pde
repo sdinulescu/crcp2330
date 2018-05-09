@@ -43,11 +43,13 @@ class SymbolTable {
   }
   
   String handleA(String num) {
+    println("original: " + num);
     String forwards = "";
     String bit = "0";
-    int n = Integer.parseInt(num);
+    int n = Integer.parseInt(  num   );
+    println("integer: " + n);
     bit = numToBinary(n, forwards);
-    for (int i = 0; i < (15 - forwards.length()); i++) { //converts into 16 bit word
+    for (int i = 0; i < (16 - backwards.length()); i++) { //converts into 16 bit word
       bit = "0" + bit;
     }
     bit = bit + forwards;

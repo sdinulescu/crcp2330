@@ -19,9 +19,9 @@ boolean isNumeric(String string) {  //checks if it is a numeric A command (ex. @
 }
 
 boolean isLabel(String s) {
-  if ( s.matches(".*\\d+.*") ) {
-    return false;
-  } else { return true; }
+  if ( s.matches(".*\\d+.*") ) { return false;} 
+  if (s.equals("@0") ) { return false; }
+  else { return true; }
 }
   
 
@@ -95,7 +95,12 @@ void secondPass(Parser parser, Code code) {
       //println(  "comp: " + code.comp(  parser.comp(line)  ) + " dest: " + code.dest(  parser.dest(line)  ) + " jump: " + code.jump(  parser.jump(line)  )  );
       bit = assemble(code.comp(parser.comp(line)), code.dest(parser.dest(line)), code.jump(parser.jump(line)));
     } else if (  ctype.equals("A_COMMAND")   ) { //A Commands
-      if ( isNumeric (ctype) ) {
+      println(isLabel(line));
+      if ( isLabel (line) == false ) {
+        if (line.contains("R")) {
+          line = line.substring(2, line.length());
+        } else { line = line.substring(1, line.length()); }
+        println("LINE: " + line);
         bit = parser.handleA(line);
       } else {
         println("check symbol table");
@@ -109,19 +114,21 @@ void secondPass(Parser parser, Code code) {
         println("bit from symbolTable: " + bit);
       }
     } 
-    output_file.write(bit);
-    println("ctype: " + ctype);
     if (  ctype.equals("L_COMMAND") && !line.contains("(") ) { // handle label
-      output_file.write(bit);
+      println("lable");
       bit = symbolTable.hm.get(line);
     }
     
-    output_file.close(); //close the file
-  }
+    println("bit: " + bit);
+    if (bit.equals("") || bit.equals(null)) {} else { output_file.println(bit); } //print each bit as a line to the output file, ignore whitespace
+    }
+  
+  output_file.close(); //close the file
+  
 }
 
 void setup() {
-  output_file = createWriter("output_MAX.hack");
+  output_file = createWriter("output.hack");
   // instance of the code module
   code = new Code();
   // instance of the parser module, taking in the input file
@@ -131,5 +138,4 @@ void setup() {
   
   firstPass(parser, symbolTable);
   secondPass(parser, code);
-
 }
