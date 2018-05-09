@@ -1,8 +1,11 @@
 // whatever file the assembler will read in to parse
 
-String input_file = "Rect.asm";
+String input_file = "";
 PrintWriter output_file;
 String bit = "";
+String saved = "";
+String typing = "";
+PFont f;
 
 Parser parser; 
 Code code;
@@ -50,76 +53,64 @@ String removeComments(String s) {
 void firstPass(Parser parser, SymbolTable symbolTable) { //puts everything into symbol table
   String address = "";
   int count = 0;
-  println("first pass");
   for (int i = 0; i < parser.lines.size(); i++) {
     String o_str = parser.lines.get(i);
     String bin = "";
     o_str = removeSpaces(o_str);
     o_str = removeComments(o_str);
     parser.lines.set(i, o_str);
-    println("o_str: " + o_str); 
     if (  o_str.contains("@") && isNumeric( o_str.substring( 1, o_str.length() ) ) == false && isLabel(o_str) == false )  { //symbol or label
-      //str = removeSpaces(str);
-      //str = removeComments(str);
       if (o_str.charAt(1) == 'R') { // @memoryAddress, parse into binary to put in symbol table
         bin = o_str.substring(2, o_str.length());
         address = symbolTable.handleA(bin);
       } 
       //check if symbol is in the table
-      println(symbolTable.contains(  o_str  ) );
       if (  symbolTable.contains(  o_str  )  == false ) { // if it is not in the table, add it
         symbolTable.addEntry(  o_str,  address );
       }
     } else if ( o_str.contains("@") && isLabel(o_str) == true) {
       String designatedAddress = "1" + count;
       count += 2;
-      println("designatedAddress: " + designatedAddress);
       designatedAddress = symbolTable.handleA(  designatedAddress  );
-      println("designatedAddress: " + designatedAddress);
       symbolTable.addEntry(  o_str, designatedAddress  );
     }
   }
-  println("SymbolTable: " + symbolTable.hm);
+  //println("SymbolTable: " + symbolTable.hm);
 }
 
 void secondPass(Parser parser, Code code) {
-  println("second pass");
   while (parser.has_more_commands() == true) {
     bit = "";
     String line = parser.advance();
     String ctype = parser.command_type();
-    println("line: " + line);
-    println("ctype: " + ctype);
+    //println("line: " + line);
+    //println("ctype: " + ctype);
     if (  ctype.equals("C_COMMAND")  ) { //C Commands
       //println("comp: " + parser.comp(line) + " dest: " + parser.dest(line) + " jump: " + parser.jump(line) );
       //println(  "comp: " + code.comp(  parser.comp(line)  ) + " dest: " + code.dest(  parser.dest(line)  ) + " jump: " + code.jump(  parser.jump(line)  )  );
       bit = assemble(code.comp(parser.comp(line)), code.dest(parser.dest(line)), code.jump(parser.jump(line)));
     } else if (  ctype.equals("A_COMMAND")   ) { //A Commands
-      println(isLabel(line));
       if ( isLabel (line) == false ) {
         if (line.contains("R")) {
           line = line.substring(2, line.length());
         } else { line = line.substring(1, line.length()); }
-        println("LINE: " + line);
         bit = parser.handleA(line);
-      } else {
-        println("check symbol table");
+      } else { //checks symbol table
+        //println("check symbol table");
         if (symbolTable.contains(line)) {
         bit = symbolTable.hm.get(line);
-        } else { 
-          println("not in symbolTable"); 
+        } else {  //add to symbol table
           ctype = "L_COMMAND";
           parser.labels.add(line.substring(1, line.length()));
         }
-        println("bit from symbolTable: " + bit);
+        //println("bit from symbolTable: " + bit);
       }
     } 
     if (  ctype.equals("L_COMMAND") && !line.contains("(") ) { // handle label
-      println("lable");
       bit = symbolTable.hm.get(line);
     }
     
-    println("bit: " + bit);
+    //println("bit: " + bit);
     if (bit.equals("") || bit.equals(null)) {} else { output_file.println(bit); } //print each bit as a line to the output file, ignore whitespace
     }
   
@@ -128,14 +119,55 @@ void secondPass(Parser parser, Code code) {
 }
 
 void setup() {
-  output_file = createWriter("output.hack");
-  // instance of the code module
-  code = new Code();
-  // instance of the parser module, taking in the input file
-  parser = new Parser(input_file);
-  // instance of the symbol table module
-  symbolTable = new SymbolTable();
+  f = createFont("Arial",16);
+  size(500, 500);
+}
+
+void GUI() {
+   //GUI Display
+  //Taken from: http://learningprocessing.com/examples/chp18/example-18-01-userinput
+  background(255);
+  int indent = 25;
   
-  firstPass(parser, symbolTable);
-  secondPass(parser, code);
+  textFont(f);
+  fill(0);
+  
+  text("Please enter the name of the file you wish to compile. \nClick in this window and type. \nHit enter to save. ", indent, 40);
+  text("Input: " + typing, indent, 190);
+  text("Saved text: " + saved, indent ,230);
+}
+
+void draw() {
+  GUI();
+  if (key == '\n') { 
+    input_file = saved;
+    saved = input_file.substring(1, input_file.length() - 4);
+    output_file = createWriter(saved + ".hack");
+    // instance of the code module
+    code = new Code();
+    // instance of the parser module, taking in the input file
+    parser = new Parser(input_file);
+    // instance of the symbol table module
+    symbolTable = new SymbolTable();
+    
+    firstPass(parser, symbolTable);
+    secondPass(parser, code);
+    noLoop();
+  } else { }
+}
+
+//Example taken from http://learningprocessing.com/examples/chp18/example-18-01-userinput
+void keyPressed() {
+  // If the return key is pressed, save the String and clear it
+  if (key == '\n' ) {
+    saved = typing;
+    // A String can be cleared by setting it equal to ""
+    typing = ""; 
+  } else {
+    // Otherwise, concatenate the String
+    // Each character typed by the user is added to the end of the String variable.
+    if (keyCode != SHIFT) {
+    typing = typing + key; 
+    }
+  }
 }

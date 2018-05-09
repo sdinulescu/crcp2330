@@ -13,12 +13,19 @@ class Parser {
   // constructor
   Parser(String read_file) {
     curr_file = read_file;
-    String[] l = loadStrings(read_file); //each line of text file becomes a slot in the array
-    for (int i = 0; i < l.length; i++) {
-      String s = l[i];
-      lines.add(s);
+    try { 
+      String[] l = loadStrings(read_file); //each line of text file becomes a slot in the array
+      for (int i = 0; i < l.length; i++) {
+        String s = l[i];
+        lines.add(s);
+      }
+      num = lines.size();
+      
+    } catch(  Exception e  ) {
+      println("File name is invalid. Please enter another file name.");
     }
-    num = lines.size();
+    
+   
   }
 
   // file still has more to parse?
@@ -40,7 +47,7 @@ class Parser {
       //println("advance file");
       if ( !lines.get(curr_num).contains("//")  ) {
         // print("good line");
-        println(lines.get(curr_num));
+        //println(lines.get(curr_num));
         return lines.get(curr_num);
       } else {
         //println("commented line");
@@ -116,11 +123,10 @@ class Parser {
   }
   
   String handleA(String num) {
-    println("original: " + num);
     String forwards = "";
     String bit = "0";
     int n = Integer.parseInt(  num   );
-    println("integer: " + n);
+    //println("integer: " + n);
     bit = numToBinary(n, forwards);
     for (int i = 0; i < (16 - backwards.length()); i++) { //converts into 16 bit word
       bit = "0" + bit;
@@ -128,7 +134,6 @@ class Parser {
     bit = bit + forwards;
     return bit;
   }
-  
   
   String numToBinary(int num, String bit) {
     String bin = "";
@@ -150,7 +155,5 @@ class Parser {
     }
     return binary;
   }
-    
-  
-  
+   
 }

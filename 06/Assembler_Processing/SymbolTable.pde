@@ -13,7 +13,7 @@ class SymbolTable {
     
   void addEntry(String symbol, String address){ // adds the pair to the table
       hm.put(symbol, address);
-      println("Entry added! Symbol: " + symbol + " Address: " + address);
+      //println("Entry added! Symbol: " + symbol + " Address: " + address);
   }
     
   // returns whether or not symbol is in the hash table already
@@ -43,11 +43,9 @@ class SymbolTable {
   }
   
   String handleA(String num) {
-    println("original: " + num);
     String forwards = "";
     String bit = "0";
     int n = Integer.parseInt(  num   );
-    println("integer: " + n);
     bit = numToBinary(n, forwards);
     for (int i = 0; i < (16 - backwards.length()); i++) { //converts into 16 bit word
       bit = "0" + bit;
